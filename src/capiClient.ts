@@ -589,7 +589,7 @@ export class CAPIClient {
 
         const headers = requestOptions.headers || {};
 
-        headers["X-GitHub-Api-Version"] = "2025-10-01";
+        headers["X-GitHub-Api-Version"] = "2026-01-09";
         headers["VScode-SessionId"] = this._extensionInfo.sessionId;
         headers["VScode-MachineId"] = this._extensionInfo.machineId;
         headers["Editor-Device-Id"] = this._extensionInfo.deviceId;

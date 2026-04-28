@@ -43,5 +43,6 @@
 
         // esbuild does not handle types
         "emitDeclarationOnly": true
-    }
+    },
+    "exclude": ["dist", "node_modules", "published", "scripts"]
 }

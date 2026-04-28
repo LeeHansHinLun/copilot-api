@@ -45,10 +45,8 @@ export interface IFetcherService {
         baseUrl: string,
         options: PaginationOptions<T>,
     ): Promise<T[]>;
-    createWebSocket(
-        url: string,
-        options?: WebSocketConnectOptions,
-    ): any;
+    // biome-ignore lint/suspicious/noExplicitAny: same as definitions
+    createWebSocket(url: string, options?: WebSocketConnectOptions): any;
 }
 export interface IExtensionInformation {
     name: string;

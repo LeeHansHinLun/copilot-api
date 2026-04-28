@@ -1,4 +1,5 @@
-import { rm } from "node:fs/promises";
+import { access, cp, mkdir, rm } from "node:fs/promises";
+import path from "node:path";
 import * as esbuild from "esbuild-wasm";
 import ts from "typescript";
 
@@ -39,3 +40,41 @@ const program = ts.createProgram({
     },
 });
 program.emit();
+
+const publish = args.has("--publish");
+const root = process.cwd();
+const targetDir = path.join(root, "published");
+
+const items = ["dist", "src", "build.mjs", "package.json", "tsconfig.json"];
+
+async function exists(p) {
+    try {
+        await access(p);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+async function doPublish() {
+    await mkdir(targetDir, { recursive: true });
+
+    for (const item of items) {
+        const srcPath = path.join(root, item);
+        const destPath = path.join(targetDir, item);
+
+        if (await exists(destPath)) {
+            await rm(destPath, { recursive: true, force: true });
+        }
+
+        if (await exists(srcPath)) {
+            await cp(srcPath, destPath, { recursive: true });
+        }
+    }
+}
+
+if (publish)
+    doPublish().catch((err) => {
+        console.error(err);
+        process.exit(1);
+    });

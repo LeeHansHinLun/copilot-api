@@ -1,0 +1,40 @@
+{
+    "name": "@vscode/copilot-api",
+    "description": "A module used for interacting with the GitHub Copilot API.",
+    "version": "0.3.0",
+    "type": "module",
+    "author": {
+        "name": "Microsoft Corporation"
+    },
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        "types": "./dist/index.d.ts",
+        "module-sync": "./dist/index.js",
+        "import": "./dist/index.js",
+        "require": "./dist/index.js",
+        "default": "./dist/index.js"
+    },
+    "sideEffects": false,
+    "license": "SEE LICENSE",
+    "scripts": {
+        "build": "node build.mjs --production --sourcemap",
+        "build:publish": "node build.mjs --production --sourcemap --publish",
+        "build:production": "node build.mjs --production",
+        "build:production:publish": "node build.mjs --production --publish",
+        "build:dev": "node build.mjs --development --sourcemap",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Microsoft/vscode-extension-telemetry.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Microsoft/vscode-extension-telemetry/issues"
+    },
+    "devDependencies": {
+        "@vscode/copilot-api": "^0.3.0",
+        "esbuild-wasm": "file:../../esbuild/npm/esbuild-wasm",
+        "typescript": "file:../../TypeScript"
+    }
+}
