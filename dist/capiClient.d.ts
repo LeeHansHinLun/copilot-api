@@ -10,6 +10,7 @@ export declare class CAPIClient {
     constructor(_extensionInfo: IExtensionInformation, _license: string | undefined, fetcherService?: IFetcherService, hmacSecret?: string, _integrationId?: string);
     updateDomains(copilotToken: CopilotToken | undefined, enterpriseUrlConfig: string | undefined): IDomainChangeResponse;
     makeRequest<T>(requestOptions: MakeRequestOptions, requestMetadata: RequestMetadata): Promise<T>;
+    private _buildAgentTaskURL;
     createResponsesWebSocket(request: WebSocketConnectOptions): Promise<any>;
     private _prepareContentExclusionUrl;
     private _mixinHeaders;

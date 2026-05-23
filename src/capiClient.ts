@@ -13,42 +13,10 @@ import {
 } from "./types";
 import { createRequestHMAC, isCAPIRequest } from "./utils";
 
-/*
-export declare class CAPIClient {
-    private readonly _extensionInfo;
-    private readonly _integrationId?;
-    private readonly _domainService;
-    private readonly _fetcherService;
-    private readonly _hmacSecret;
-    private _copilotSku;
-    private _licenseCheckSucceeded;
-    constructor(
-        _extensionInfo: IExtensionInformation,
-        _license: string | undefined,
-        fetcherService?: IFetcherService,
-        hmacSecret?: string,
-        _integrationId?: string,
-    );
-    updateDomains(
-        copilotToken: CopilotToken | undefined,
-        enterpriseUrlConfig: string | undefined,
-    ): IDomainChangeResponse;
-    makeRequest<T>(
-        requestOptions: MakeRequestOptions,
-        requestMetadata: RequestMetadata,
-    ): Promise<T>;
-    createResponsesWebSocket(request: WebSocketConnectOptions): Promise<any>;
-    private _prepareContentExclusionUrl;
-    private _mixinHeaders;
-    get copilotTelemetryURL(): string;
-    get dotcomAPIURL(): string;
-    get capiPingURL(): string;
-    get proxyBaseURL(): string;
-    get originTrackerURL(): string;
-    get snippyMatchPath(): string;
-    get snippyFilesForMatchPath(): string;
-}
-*/
+type AgentTaskMetadata = Extract<
+    RequestMetadata,
+    { type: RequestType.AgentTask }
+>;
 
 export class CAPIClient {
     private readonly _extensionInfo;
@@ -551,6 +519,14 @@ export class CAPIClient {
                     finalRequestOptions,
                 );
             }
+            case RequestType.AgentTask: {
+                return this._fetcherService.fetch(
+                    this._buildAgentTaskURL(
+                        requestMetadata as AgentTaskMetadata,
+                    ),
+                    finalRequestOptions,
+                );
+            }
             default:
                 throw new Error(
                     `Unsupported request type: ${
@@ -559,6 +535,92 @@ export class CAPIClient {
                     }`,
                 );
         }
+    }
+
+    private _buildAgentTaskURL(requestMetadata: AgentTaskMetadata) {
+        const baseUrl = this._domainService.copilotAgentTasksURL;
+        const { action, owner, repo, taskId, searchParams } = requestMetadata;
+
+        const requireTaskId = () => {
+            if (!taskId) {
+                throw new Error(
+                    `taskId is required for AgentTask action "${action}"`,
+                );
+            }
+            return taskId;
+        };
+
+        const requireRepoInfo = () => {
+            if (!owner || !repo) {
+                throw new Error(
+                    `owner and repo are required for AgentTask action "${action}"`,
+                );
+            }
+            return { owner, repo };
+        };
+
+        let path: string;
+
+        switch (action) {
+            case "create": {
+                const repoInfo = requireRepoInfo();
+                path = `/repos/${repoInfo.owner}/${repoInfo.repo}/tasks`;
+                break;
+            }
+            case "list":
+                path = "/tasks";
+                break;
+            case "list-for-repo": {
+                const repoInfo = requireRepoInfo();
+                path = `/repos/${repoInfo.owner}/${repoInfo.repo}/tasks`;
+                break;
+            }
+            case "get":
+                path = `/tasks/${requireTaskId()}`;
+                break;
+            case "events":
+                path = `/tasks/${requireTaskId()}/events`;
+                break;
+            case "steer":
+                path = `/tasks/${requireTaskId()}/steer`;
+                break;
+            case "create-pr": {
+                const repoInfo = requireRepoInfo();
+                path = `/repos/${repoInfo.owner}/${repoInfo.repo}/tasks/${requireTaskId()}/pulls`;
+                break;
+            }
+            case "archive":
+                path = `/tasks/${requireTaskId()}/archive`;
+                break;
+            case "unarchive":
+                path = `/tasks/${requireTaskId()}/unarchive`;
+                break;
+            default: {
+                const unsupportedAction = action;
+                throw new Error(
+                    `Unsupported AgentTask action: ${unsupportedAction}`,
+                );
+            }
+        }
+
+        let fullUrl = `${baseUrl}${path}`;
+
+        if (searchParams) {
+            const urlParams = new URLSearchParams();
+
+            for (const [key, value] of Object.entries(searchParams)) {
+                if (value != null) {
+                    urlParams.set(key, String(value));
+                }
+            }
+
+            const queryString = urlParams.toString();
+            if (queryString) {
+                fullUrl += `?${queryString}`;
+            }
+        }
+
+        return fullUrl;
     }
 
     async createResponsesWebSocket(request: WebSocketConnectOptions) {
@@ -589,7 +651,7 @@ export class CAPIClient {
 
         const headers = requestOptions.headers || {};
 
-        headers["X-GitHub-Api-Version"] = "2026-01-09";
+        headers["X-GitHub-Api-Version"] = "2026-06-01";
         headers["VScode-SessionId"] = this._extensionInfo.sessionId;
         headers["VScode-MachineId"] = this._extensionInfo.machineId;
         headers["Editor-Device-Id"] = this._extensionInfo.deviceId;
