@@ -87,6 +87,7 @@ export declare class DomainService implements IDomainService {
     get chatAttachmentUploadURL(): string;
     get copilotAgentSessionsURL(): string;
     get copilotAgentJobsURL(): string;
+    get copilotAgentTasksURL(): string;
     get CCAModelsURL(): string;
     get copilotCustomAgentsURL(): string;
     get copilotAgentMemoryURL(): string;
