@@ -212,7 +212,7 @@ export class DomainService implements IDomainService {
         return `${this._capiBaseUrl}/agents/swe`;
     }
     get copilotAgentTasksURL() {
-        return `${this._dotcomAPIUrl}/agents`;
+        return `${this._dotcomAPIUrl}/cmc_internal/api/agents`;
     }
     get CCAModelsURL() {
         return `${this._capiBaseUrl}/agents/swe/models`;
