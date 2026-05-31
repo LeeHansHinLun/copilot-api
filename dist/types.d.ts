@@ -195,10 +195,25 @@ export interface IDomainChangeResponse {
     dotcomUrlChanged: boolean;
     proxyUrlChanged: boolean;
 }
+interface CCAModelTokenPriceTier {
+    input_price?: number;
+    cache_price?: number;
+    output_price?: number;
+    context_max?: number;
+}
+interface CCAModelTokenPrices {
+    batch_size?: number;
+    input_price?: number;
+    cache_price?: number;
+    output_price?: number;
+    default?: CCAModelTokenPriceTier;
+    long_context?: CCAModelTokenPriceTier;
+}
 interface CCAModelBilling {
     is_premium: boolean;
     multiplier: number;
     restricted_to: string[];
+    token_prices?: CCAModelTokenPrices;
 }
 interface CCAModelVisionLimits {
     max_prompt_image_size: number;
@@ -239,6 +254,7 @@ export interface CCAModel {
     is_chat_fallback: boolean;
     model_picker_category: string;
     model_picker_enabled: boolean;
+    model_picker_price_category?: string;
     name: string;
     object: string;
     policy: CCAModelPolicy;

@@ -1,7 +1,7 @@
 {
     "name": "@vscode/copilot-api",
     "description": "A module used for interacting with the GitHub Copilot API.",
-    "version": "0.4.2",
+    "version": "0.4.3",
     "type": "module",
     "author": {
         "name": "Microsoft Corporation"
@@ -33,7 +33,7 @@
         "url": "https://github.com/Microsoft/vscode-extension-telemetry/issues"
     },
     "devDependencies": {
-        "@vscode/copilot-api": "0.4.2",
+        "@vscode/copilot-api": "0.4.3",
         "esbuild-wasm": "file:../../esbuild/npm/esbuild-wasm",
         "typescript": "file:../../TypeScript"
     }
