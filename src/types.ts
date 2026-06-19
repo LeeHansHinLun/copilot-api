@@ -417,6 +417,7 @@ export interface AgentTaskSession {
     readonly head_ref?: string;
     readonly base_ref?: string;
     readonly model?: string;
+    readonly resource_global_id?: string;
 }
 /** Spec: `GetTaskResponse` (Task + sessions). */
 export interface AgentTaskGetResponse extends AgentTask {
