@@ -1,7 +1,7 @@
 {
     "name": "@vscode/copilot-api",
     "description": "A module used for interacting with the GitHub Copilot API.",
-    "version": "0.4.4",
+    "version": "0.4.5",
     "type": "module",
     "author": {
         "name": "Microsoft Corporation"

@@ -383,6 +383,9 @@ export interface AgentTaskArtifact {
         | AgentTaskBranchResourceData
         | Record<string, unknown>;
 }
+interface TaskAgentCollaborator {
+    readonly slug?: string;
+}
 /** Spec: `Task`. `owner` and `repository` are siblings — `repository` carries only `id`. */
 export interface AgentTask {
     readonly id: string;
@@ -400,6 +403,10 @@ export interface AgentTask {
     readonly archived_at?: string | null;
     readonly created_at: string;
     readonly updated_at?: string;
+    readonly agent_collaborators?: readonly TaskAgentCollaborator[];
+    readonly compute: {
+        provider: string;
+    };
 }
 /** Spec: `Session` (members of `GetTaskResponse.sessions`). */
 export interface AgentTaskSession {
