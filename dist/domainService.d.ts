@@ -70,6 +70,7 @@ export declare class DomainService implements IDomainService {
     get capiModelsURL(): string;
     get capiAutoModelURL(): string;
     get capiModelRouterURL(): string;
+    get capiAutoURL(): string;
     get embeddingsModelURL(): string;
     get chunksURL(): string;
     get embeddingsURL(): string;

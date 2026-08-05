@@ -48,5 +48,6 @@ export function isCAPIRequest(requestType: RequestType) {
         "CopilotCustomAgents",
         "CopilotAgentMemory",
         "ModelRouter",
+        "Auto",
     ]).has(requestType);
 }

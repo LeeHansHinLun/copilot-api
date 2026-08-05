@@ -186,6 +186,11 @@ export class CAPIClient {
                     this._domainService.capiModelRouterURL,
                     finalRequestOptions,
                 );
+            case RequestType.Auto:
+                return this._fetcherService.fetch(
+                    this._domainService.capiAutoURL,
+                    finalRequestOptions,
+                );
             case RequestType.Models:
                 if (requestMetadata.isModelLab) {
                     return this._fetcherService.fetch(
@@ -651,7 +656,8 @@ export class CAPIClient {
 
         const headers = requestOptions.headers || {};
 
-        headers["X-GitHub-Api-Version"] = "2026-06-01";
+        headers["X-GitHub-Api-Version"] =
+            requestMetadata.type === "Auto" ? "2026-08-01" : "2026-06-01";
         headers["VScode-SessionId"] = this._extensionInfo.sessionId;
         headers["VScode-MachineId"] = this._extensionInfo.machineId;
         headers["Editor-Device-Id"] = this._extensionInfo.deviceId;

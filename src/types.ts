@@ -124,6 +124,7 @@ export enum RequestType {
     CopilotAgentJobEnabled = "CopilotAgentJobEnabled",
     AgentTask = "AgentTask",
     ModelRouter = "ModelRouter",
+    Auto = "Auto",
 }
 export type RequestMetadata =
     | {

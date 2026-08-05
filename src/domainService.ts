@@ -160,6 +160,9 @@ export class DomainService implements IDomainService {
     get capiModelRouterURL() {
         return `${this.capiAutoModelURL}/intent`;
     }
+    get capiAutoURL() {
+        return `${this._capiBaseUrl}/auto`;
+    }
     get embeddingsModelURL() {
         return `${this.embeddingsURL}/models`;
     }

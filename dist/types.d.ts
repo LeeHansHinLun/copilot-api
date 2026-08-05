@@ -110,7 +110,8 @@ export declare enum RequestType {
     CopilotAgentMemory = "CopilotAgentMemory",
     CopilotAgentJobEnabled = "CopilotAgentJobEnabled",
     AgentTask = "AgentTask",
-    ModelRouter = "ModelRouter"
+    ModelRouter = "ModelRouter",
+    Auto = "Auto"
 }
 export type RequestMetadata = {
     type: Exclude<RequestType, RequestType.ListModel | RequestType.ModelPolicy | RequestType.SearchSkill | RequestType.RemoteAgentChat | RequestType.ContentExclusion | RequestType.ChatCompletions | RequestType.ChatResponses | RequestType.ChatMessages | RequestType.Models | RequestType.CodingGuidelines | RequestType.EmbeddingsIndex | RequestType.ChatAttachmentUpload | RequestType.CopilotSessionLogs | RequestType.CopilotSessionDetails | RequestType.CopilotSessions | RequestType.CopilotAgentJob | RequestType.CCAModelsList | RequestType.CopilotCustomAgents | RequestType.CopilotCustomAgentsDetail | RequestType.OrgCustomInstructions | RequestType.CopilotAgentMemory | RequestType.CopilotAgentJobEnabled | RequestType.AgentTask>;
