@@ -455,7 +455,8 @@ export interface AgentTaskSessionErrorEventData {
     readonly message: string;
     readonly stack?: string;
 }
-export type AgentTaskSessionIdleEventData = {};
+export interface AgentTaskSessionIdleEventData {
+}
 export interface AgentTaskSessionInfoEventData {
     readonly infoType: string;
     readonly message: string;

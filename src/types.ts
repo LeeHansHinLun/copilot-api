@@ -586,8 +586,8 @@ export interface AgentTaskSessionErrorEventData {
     readonly message: string;
     readonly stack?: string;
 }
-// biome-ignore lint/complexity/noBannedTypes: same as definitions
-export type AgentTaskSessionIdleEventData = {};
+// biome-ignore lint/suspicious/noEmptyInterface: same as definitions
+export interface AgentTaskSessionIdleEventData {}
 export interface AgentTaskSessionInfoEventData {
     readonly infoType: string;
     readonly message: string;
